@@ -1,0 +1,14 @@
+import { RouterProvider } from "react-router-dom"
+import { router } from "./Routes/Routes"
+
+// import './app.css'
+function App() {
+  return (
+    <div className="overflow-x-clip">
+      <RouterProvider router={router}></RouterProvider>
+
+    </div>
+  )
+}
+
+export default App
