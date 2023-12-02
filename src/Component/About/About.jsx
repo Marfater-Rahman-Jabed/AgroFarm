@@ -16,49 +16,8 @@ const About = () => {
     const [nav2, setNav2] = useState();
 
     return (
-        <div className='flex justify-between gap-12 py-28 px-16'>
-            <div className="w-1/2">
-                <Slider asNavFor={nav2} ref={(slider1) => setNav1(slider1)}>
-
-                    <div >
-                        <img src={aboutphoto} alt="" />
-                    </div>
-                    <div>
-                        <img src={hen} alt="" />
-                    </div>
-                    <div >
-                        <img src={flower} alt="" />
-                    </div>
-                    <div >
-                        <img src={grass} alt="" />
-                    </div>
-
-                </Slider>
-                <Slider
-                    asNavFor={nav1}
-                    ref={(slider2) => setNav2(slider2)}
-                    slidesToShow={3}
-                    swipeToSlide={true}
-                    autoplay={true}
-                    autoplaySpeed={3000}
-                    focusOnSelect={true}
-                >
-                    <div className='mr-3'>
-                        <img src={aboutphoto} alt="" className='w-48 ' />
-                    </div>
-                    <div className='mr-3'>
-                        <img src={hen} alt="" className='w-48 ' />
-                    </div>
-                    <div className='mr-3'>
-                        <img src={flower} alt="" className='w-48 ' />
-                    </div>
-                    <div className='mr-3'>
-                        <img src={grass} alt="" className='w-48 ' />
-                    </div>
-
-                </Slider>
-            </div>
-            <div className="w-1/2">
+        <div className='lg:flex flex-col lg:flex-row-reverse lg:justify-between gap-12 py-28 lg:px-16 md:px-16 px-6'>
+            <div className="lg:w-1/2">
                 <p className='font-bold text-green-500 text-xl mb-4 pt-8'>Founded in 1999 </p>
 
                 <h3 className='font-bold  text-black text-5xl mb-2'>Our farm</h3>
@@ -91,11 +50,86 @@ const About = () => {
                     </p>}
                 </div>
 
-                <div className='pt-12 '>
-                    <button className='py-4 font-bold text-center px-6 rounded-none bg-green-500 hover:bg-green-700 text-white text-2xl'>READ MORE</button>
+                <div className='pt-12 md:pt-10 md:pb-2 pb-4'>
+                    <button className='py-4 font-bold text-center px-6 rounded-none bg-green-500 hover:bg-green-700 text-white text-2xl '>READ MORE</button>
                 </div>
 
             </div>
+            <div className="lg:w-1/2">
+                <Slider asNavFor={nav2} ref={(slider1) => setNav1(slider1)}>
+
+                    <div >
+                        <img src={aboutphoto} alt="" />
+                    </div>
+                    <div>
+                        <img src={hen} alt="" />
+                    </div>
+                    <div >
+                        <img src={flower} alt="" />
+                    </div>
+                    <div >
+                        <img src={aboutphoto} alt="" />
+                    </div>
+                    <div >
+                        <img src={grass} alt="" />
+                    </div>
+
+                </Slider>
+                <Slider
+                    asNavFor={nav1}
+                    ref={(slider2) => setNav2(slider2)}
+                    slidesToShow={4}
+                    swipeToSlide={true}
+                    autoplay={true}
+                    autoplaySpeed={3000}
+                    focusOnSelect={true}
+                    responsive={[
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 4,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: true
+                            }
+                        },
+                        {
+                            breakpoint: 600,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 2,
+                                initialSlide: 2
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1
+                            }
+                        }
+                    ]}
+                >
+                    <div className='mr-3'>
+                        <img src={aboutphoto} alt="" className='w-36 ' />
+                    </div>
+                    <div className='mr-3'>
+                        <img src={hen} alt="" className='w-36 ' />
+                    </div>
+                    <div className='mr-3'>
+                        <img src={flower} alt="" className='w-36 ' />
+                    </div>
+                    <div className='mr-3'>
+                        <img src={aboutphoto} alt="" className='w-36 ' />
+                    </div>
+                    <div className='mr-3'>
+                        <img src={grass} alt="" className='w-36 ' />
+                    </div>
+
+
+                </Slider>
+            </div>
+
         </div>
     );
 };

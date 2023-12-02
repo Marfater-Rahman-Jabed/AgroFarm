@@ -22,21 +22,21 @@ const HeroSection = () => {
 
             <Slider {...settings} className="" >
                 <div className=" ">
-                    <div style={{ backgroundImage: `url(${bg1})`, backgroundRepeat: 'no-repeat', height: '85vh', width: '100vw' }} className="bg-cover">
-                        <p className="text-center font-bold text-6xl text-white  pt-44">Feeding A Growthing World</p>
+                    <div style={{ backgroundImage: `url(${bg1})`, backgroundRepeat: 'no-repeat', width: '100vw' }} className="bg-cover lg:h-[85vh] md:h-[50vh] h-[65vh]">
+                        <p className="text-center font-bold lg:text-6xl  md:text-5xl text-4xl text-white  lg:pt-44 md:pt-40 pt-60">Feeding A Growthing World</p>
                         <p className="text-center font-bold text-2xl text-white pt-2">Lorem ipsum dolor sit amet consectetur <br /> adipisicing elit. </p>
                     </div>
                 </div>
                 <div className=" ">
-                    <div style={{ backgroundImage: `url(${bg2})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', height: '85vh' }} className="">
-                        <p className="text-center font-bold text-6xl text-white  pt-44">AgriBusiness ! Build Todays  World</p>
+                    <div style={{ backgroundImage: `url(${bg2})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', }} className="lg:h-[85vh] md:h-[50vh] h-[65vh]">
+                        <p className="text-center font-bold lg:text-6xl  md:text-5xl text-4xl text-white  lg:pt-44 md:pt-40 pt-60">AgriBusiness ! Build Todays  World</p>
                         <p className="text-center font-bold text-2xl text-white pt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
                     </div>
                 </div>
                 <div className=" ">
-                    <div style={{ backgroundImage: `url(${bg3})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', height: '85vh' }} className="">
+                    <div style={{ backgroundImage: `url(${bg3})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', }} className="lg:h-[85vh] md:h-[50vh] h-[65vh]">
                         <span>
-                            <p className="text-center font-bold text-6xl text-white  pt-44">Leading the Wheat Industry <br /> Forward</p>
+                            <p className="text-center font-bold lg:text-6xl  md:text-5xl text-4xl text-white  lg:pt-44 md:pt-40 pt-60">Leading the Wheat Industry  Forward</p>
                             <p className="text-center font-bold text-2xl text-white ">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
                         </span>
                     </div>

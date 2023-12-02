@@ -4,7 +4,7 @@ import add3 from '../../assets/add3.png'
 import add4 from '../../assets/add4.png'
 const Advertisement = () => {
     return (
-        <div className='flex justify-between py-16 gap-16 px-20 bg-slate-100'>
+        <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 justify-between lg:py-16 lg:gap-16 lg:px-20 md:px-16 px-10 bg-slate-100'>
             <div className='py-10'>
                 <img src={add1} alt="" className='w-24' />
                 <h3 className='font-bold text-2xl py-4'>Natural feed</h3>
