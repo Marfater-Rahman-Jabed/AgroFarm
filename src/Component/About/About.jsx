@@ -3,8 +3,9 @@ import aboutphoto from '../../assets/agrodemobg.jpg'
 import hen from '../../assets/hen.jpg';
 import grass from '../../assets/grass.jpg';
 import flower from '../../assets/flower.jpg';
-
+import './About.css'
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
 const About = () => {
     const aboutpara = 'Chicken Good is a 100% American, family-owned and operated company, providing fresh shell eggs and egg products to supermarkets, restaurants and food manufacturers.';
     const missionpara = 'Our mission is to provide our community and neighbors with proven poultry and the patterns essential to developing sustainable poultry flocks.';
@@ -24,17 +25,17 @@ const About = () => {
                 <p className='font-semibold text-black text-4xl'>Who we are</p>
 
                 <div className='flex justify-between py-6'>
-                    {term == 'aboutTerm' ? <button className='font-bold text-slate-400 border-separate border-b-4 border-orange-500 py-1 text-sm' onClick={() => setTerm('aboutTerm')}>ABOUT</button>
+                    {term == 'aboutTerm' ? <button className='border-separate border-b-4  border-orange-500  btns btn1 font-bold text-slate-400 py-1 text-sm hover:text-white' onClick={() => setTerm('aboutTerm')}>ABOUT</button>
                         :
-                        <button className='font-bold text-slate-400 border-separate hover:border-b-4 hover:border-orange-500 py-1 text-sm' onClick={() => setTerm('aboutTerm')}>ABOUT</button>
+                        <button className='btns btn1 font-bold text-slate-400  py-1 text-sm hover:text-white border-separate border-b-4  border-slate-500' onClick={() => setTerm('aboutTerm')}>ABOUT</button>
                     }
-                    {term == 'missionTerm' ? <button className={`font-bold text-slate-400  border-separate border-b-4 border-orange-500 py-1 text-sm`} onClick={() => setTerm('missionTerm')}>OUR MISSION</button>
+                    {term == 'missionTerm' ? <button className='border-separate border-b-4  border-orange-500  btns btn1 font-bold text-slate-400 hover:text-white py-1 text-sm' onClick={() => setTerm('missionTerm')}>OUR MISSION</button>
                         :
-                        <button className={`font-bold text-slate-400  border-separate hover:border-b-4 hover:border-orange-500 py-1 text-sm`} onClick={() => setTerm('missionTerm')}>OUR MISSION</button>
+                        <button className={`btns btn1 font-bold text-slate-400  py-1 text-sm hover:text-white border-separate border-b-4  border-slate-500`} onClick={() => setTerm('missionTerm')}>OUR MISSION</button>
                     }
-                    {term == 'visionTerm' ? <button className='font-bold text-slate-400 border-separate border-b-4 border-orange-500 py-1 text-sm' onClick={() => setTerm('visionTerm')}>OUR VISION</button>
+                    {term == 'visionTerm' ? <button className='border-separate border-b-4  border-orange-500  btns btn1 font-bold text-slate-400  py-1 text-sm hover:text-white' onClick={() => setTerm('visionTerm')}>OUR VISION</button>
                         :
-                        <button className='font-bold text-slate-400 border-separate hover:border-b-4 hover:border-orange-500 py-1 text-sm' onClick={() => setTerm('visionTerm')}>OUR VISION</button>
+                        <button className='btns btn1 font-bold  text-slate-400   hover:text-white py-1 text-sm border-separate border-b-4  border-slate-500' onClick={() => setTerm('visionTerm')}>OUR VISION</button>
                     }
                 </div>
 
@@ -51,7 +52,7 @@ const About = () => {
                 </div>
 
                 <div className='pt-12 md:pt-10 md:pb-2 pb-4'>
-                    <button className='py-4 font-bold text-center px-6 rounded-none bg-green-500 hover:bg-green-700 text-white text-2xl '>READ MORE</button>
+                    <Link to='/about'><button className='py-4 font-bold text-center hover:text-white px-6 rounded-none outline  text-2xl btns btn1'>READ MORE</button></Link>
                 </div>
 
             </div>
