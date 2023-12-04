@@ -15,10 +15,12 @@ const OurProducts = () => {
                     <p className="text-5xl font-bold mb-10">Our Products</p>
                 </div>
             </Fade>
-
+            <div className='flex justify-end lg:px-20 md:px-10 px-4'>
+                <button className='btn btn-outline btn-secondary'>Add Item</button>
+            </div>
             <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 justify-between gap-8 lg:px-20 md:px-10 px-4 pt-10'>
                 <Fade duration={1500} direction='right'>
-                    <Link to='/products/656ca66ed13b332e7a1ba24e'>
+                    <Link to='/ProductsVegetable'>
                         <div className='py-8 bg-slate-200 hover:bg-slate-100 zoom'>
                             <div className='flex justify-center'><img src={cardItem1} alt="" className=' mb-4 rounded-full' /></div>
                             <h3 className='text-center text-2xl font-semibold py-3'>VEGETABLE</h3>
@@ -26,7 +28,7 @@ const OurProducts = () => {
                     </Link>
                 </Fade>
                 <Fade duration={1500} direction='right' delay={50}>
-                    <Link to='/products/656ca66ed13b332e7a1ba24c'>
+                    <Link to='/productsOilSeed'>
                         <div className='py-8 bg-slate-200 hover:bg-slate-100 zoom'>
                             <div className='flex justify-center'><img src={cardItem2} alt="" className=' mb-4 rounded-full' /></div>
                             <h3 className='text-center text-2xl font-semibold  py-3'>GRAIN & OILSEED</h3>
@@ -34,7 +36,7 @@ const OurProducts = () => {
                     </Link>
                 </Fade>
                 <Fade duration={1500} direction='right' delay={100}>
-                    <Link to='/products/656ca66ed13b332e7a1ba24d'>
+                    <Link to='/productsFruits'>
                         <div className='py-8  bg-slate-200 hover:bg-slate-100 zoom'>
                             <div className='flex justify-center'><img src={cardItem3} alt="" className=' mb-4 rounded-full' /></div>
                             <h3 className='text-center text-2xl font-semibold  py-3'>FRUITS & NUTS</h3>
@@ -42,7 +44,7 @@ const OurProducts = () => {
                     </Link>
                 </Fade>
                 <Fade duration={1500} direction='right' delay={150}>
-                    <Link to='/products/656ca66ed13b332e7a1ba24b'>
+                    <Link to='/productsFish'>
                         <div className='py-8 bg-slate-200 hover:bg-slate-100 zoom'>
                             <div className='flex justify-center'><img src={cardItem4} alt="" className=' mb-4 rounded-full' /></div>
                             <h3 className='text-center text-2xl font-semibold  py-3'>FISH ITEM</h3>

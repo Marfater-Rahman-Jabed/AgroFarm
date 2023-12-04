@@ -5,7 +5,8 @@ import MainLayout from "../Layout/MainLayout/MainLayout";
 import Abouts from "../Pages/Abouts/Abouts";
 import Contacts from "../Pages/Contacts/Contacts";
 import Blogs from "../Pages/Blogs/Blogs";
-import Products from "../Pages/Products/Products";
+import ProductsVegetable from "../Pages/ProductsVegetable/ProductsVegetable";
+import AddItem from "../Pages/AddItem/AddItem";
 
 export const router = createBrowserRouter([
     {
@@ -29,8 +30,13 @@ export const router = createBrowserRouter([
                 element: <Blogs></Blogs>
             },
             {
-                path: '/products/:id',
-                element: <Products></Products>
+                path: '/ProductsVegetable',
+                element: <ProductsVegetable></ProductsVegetable>
+                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+            },
+            {
+                path: '/addItem',
+                element: <AddItem></AddItem>
             },
         ]
     }

@@ -8,10 +8,15 @@ import { MdOutlineArrowRightAlt } from "react-icons/md";
 import OurTeam from '../../Component/OurTeam/OurTeam';
 import Testimonial from '../../Component/Testimonial/Testimonial';
 import History from '../../Component/History/History';
+import { useEffect } from 'react';
 
 
 
 const Abouts = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className=''>

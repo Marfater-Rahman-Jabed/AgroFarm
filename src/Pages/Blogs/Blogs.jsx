@@ -2,7 +2,11 @@ import blog1 from '../../assets/blog3.jpg'
 import blog2 from '../../assets/blog2.jpg'
 import blog3 from '../../assets/blog1.jpg'
 import bgAbout from '../../assets/lastAbout.png'
+import { useEffect } from 'react';
 const Blogs = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     return (
         <div>
             <div className='py-36' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
