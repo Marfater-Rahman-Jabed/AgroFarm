@@ -58,5 +58,67 @@
         "name": "CapsiCum",
         "picture": "https://i.ibb.co/TR637m4/veg.jpg",
         "price": 160
-    }
+    },
+    [
+        {
+            "name": "Solid Grain",
+            "picture": "https://i.ibb.co/fHH1z6w/grain2.jpg",
+            "price": 100
+        },
+        {
+            "name": "Colored Grain",
+            "picture": "https://i.ibb.co/9gWx1Bm/grain.jpg",
+            "price": 90
+        },
+        {
+            "name": "Special Grain",
+            "picture": "https://i.ibb.co/Vm5dX46/grain3.jpg",
+            "price": 100
+        },
+        {
+            "name": "Royel Grain",
+            "picture": "https://i.ibb.co/tqQHsW7/grain4.jpg",
+            "price": 80
+        },
+        {
+            "name": "Soyabin",
+            "picture": "https://i.ibb.co/8N0sJfj/grain5.jpg",
+            "price": 120
+        },
+        {
+            "name": "Oil Seed",
+            "picture": "https://i.ibb.co/kMnzhRx/grain6.jpg",
+            "price": 80
+        },
+        {
+            "name": "Raduni Redimix",
+            "picture": "https://i.ibb.co/HxXVVBR/grain8.jpg",
+            "price": 70
+        },
+        {
+            "name": "Oil Seed",
+            "picture": "https://i.ibb.co/PgkyZvc/grain7.jpg",
+            "price": 140
+        },
+        {
+            "name": "Best Grain",
+            "picture": "https://i.ibb.co/DpR6JzJ/grain9.jpg",
+            "price": 100
+        },
+        {
+            "name": "Graib Beauty",
+            "picture": "https://i.ibb.co/zFgdWrq/grain10.jpg",
+            "price": 140
+        },
+        {
+            "name": "Collection Grain",
+            "picture": "https://i.ibb.co/tqHGJ5v/grain11.jpg",
+            "price": 100
+        },
+        {
+            "name": "SunFlower Seed",
+            "picture": "https://i.ibb.co/d0Mf6BZ/grain12.jpg",
+            "price": 160
+        }
+    ]
 ]

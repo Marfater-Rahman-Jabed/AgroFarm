@@ -1,16 +1,113 @@
 import './OurTeam.css'
-import team1 from '../../assets/team1.jpg'
-import team2 from '../../assets/team2.jpg'
-import team3 from '../../assets/team3.jpg'
-import team4 from '../../assets/team4.jpg'
+// import team1 from '../../assets/team1.jpg'
 import { LuFacebook } from "react-icons/lu";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaSquareWhatsapp } from "react-icons/fa6";
-
-
+import { toast } from 'react-toastify'
+import { useState } from 'react'
+import { useQuery } from 'react-query'
+import { MdDeleteOutline } from "react-icons/md";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 const OurTeam = () => {
+
+    const imageKey = import.meta.env.VITE_imagekey;
+    const [itemName, setItemName] = useState('')
+    const [itemDes, setItemDes] = useState('')
+    const [fb, setFb] = useState('')
+    const [whatsApp, setWhatsApp] = useState('')
+    const [tweeter, setTweeter] = useState('')
+    const [linkdin, setLinkdin] = useState('')
+    const [photo, setPhoto] = useState('')
+    // const myData = useLoaderData()
+    const { data: myData = [], refetch } = useQuery({
+        queryKey: ['Datas'],
+        queryFn: async () => {
+            // setIsLoading(true)
+            const res = await fetch(`http://localhost:5000/Members`)
+            const data = res.json()
+            // setIsLoading(false)
+            return data;
+        }
+    })
+
+    console.log(myData)
+    const handleDelete = (id) => {
+
+        fetch(`http://localhost:5000/deleteMembers/${id}`, {
+            method: 'DELETE',
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                toast.success(`Successfully Removed`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                refetch(`http://localhost:5000/Members`)
+            })
+    }
+
+
+
+    const handleData = () => {
+        console.log('submitted')
+        const formData = new FormData();
+        formData.append('image', photo);
+        fetch(`https://api.imgbb.com/1/upload?key=${imageKey}`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(image => {
+                console.log(image)
+                if (image.success) {
+                    const itemDetails = {
+                        picture: image.data.url,
+                        name: itemName,
+                        title: itemDes,
+                        fb: fb,
+                        whatsApp: whatsApp,
+                        tweeter: tweeter,
+                        linkdin: linkdin
+
+                    }
+
+                    fetch(`http://localhost:5000/uploadMembers`, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json',
+                        },
+                        body: JSON.stringify(itemDetails)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            console.log(result);
+                            toast.success(`${itemName} Successfully Uploaded`, {
+                                position: "top-center",
+                                autoClose: 5000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "colored",
+                            });
+
+                            refetch()
+                        })
+                }
+            })
+    }
+
     return (
         <div className='py-20 '>
             <div className="text-center">
@@ -18,60 +115,124 @@ const OurTeam = () => {
 
                 <p className="text-5xl font-bold mb-10">Our Team</p>
             </div>
-            <div className="grid  lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
-                <div className="card  bg-base-100 shadow-xl">
-                    <figure><img src={team1} alt="Shoes" className="zoom w-full" /></figure>
-                    <div className="card-body">
-                        <h2 className="font-bold text-xl text-center">Rizbi Chowdary</h2>
-                        <p className="font-semibold text-xl text-center">Founder & CEO </p>
-                        <div className="card-actions justify-center gap-2 py-5">
-                            <LuFacebook className='text-2xl'></LuFacebook>
-                            <FaTwitter className='text-2xl'></FaTwitter>
-                            <FaLinkedin className='text-2xl'></FaLinkedin>
-                            <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
-                        </div>
-                    </div>
-                </div>
-                <div className="card  bg-base-100 shadow-xl">
-                    <figure><img src={team2} alt="Shoes" className="zoom w-full" /></figure>
-                    <div className="card-body">
-                        <h2 className="font-bold text-xl text-center">Rizbi Chowdary</h2>
-                        <p className="font-semibold text-xl text-center">Head of Supply Chain</p>
-                        <div className="card-actions justify-center gap-2 py-5">
-                            <LuFacebook className='text-2xl'></LuFacebook>
-                            <FaTwitter className='text-2xl'></FaTwitter>
-                            <FaLinkedin className='text-2xl'></FaLinkedin>
-                            <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
-                        </div>
-                    </div>
-                </div>
-                <div className="card  bg-base-100 shadow-xl">
-                    <figure><img src={team3} alt="Shoes" className="zoom w-full" /></figure>
-                    <div className="card-body">
-                        <h2 className="font-bold text-xl text-center">Rizbi Chowdary</h2>
-                        <p className="font-semibold text-xl text-center">Customer Care Specialist</p>
-                        <div className="card-actions justify-center gap-2 py-5">
-                            <LuFacebook className='text-2xl'></LuFacebook>
-                            <FaTwitter className='text-2xl'></FaTwitter>
-                            <FaLinkedin className='text-2xl'></FaLinkedin>
-                            <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
-                        </div>
-                    </div>
-                </div>
-                <div className="card  bg-base-100 shadow-xl">
-                    <figure><img src={team4} alt="Shoes" className="zoom w-full" /></figure>
-                    <div className="card-body">
-                        <h2 className="font-bold text-xl text-center">Rizbi Chowdary</h2>
-                        <p className="font-semibold text-xl text-center">Head Of Seals Dept.</p>
-                        <div className="card-actions justify-center gap-2 py-5">
-                            <LuFacebook className='text-2xl'></LuFacebook>
-                            <FaTwitter className='text-2xl'></FaTwitter>
-                            <FaLinkedin className='text-2xl'></FaLinkedin>
-                            <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
-                        </div>
-                    </div>
-                </div>
+            <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
+                <button className='btn btn-outline btn-secondary px-12' onClick={() => document.getElementById('my_modal_4').showModal()}>ADD TEAM MEMBER</button>
+
             </div>
+            <div className="grid  lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
+                {
+                    myData?.map((member, i) => <div key={i} className="card  bg-base-100 shadow-2xl">
+                        <figure><PhotoProvider>
+                            <PhotoView src={member?.picture}>
+                                <img src={member?.picture} alt="Shoes" className="w-full h-60 zoom cursor-pointer" />
+                            </PhotoView>
+                        </PhotoProvider></figure>
+                        <div className="card-body">
+                            <h2 className="font-bold text-xl text-center">{member?.name}</h2>
+                            <p className="font-semibold text-xl text-center">{member?.title} </p>
+                            <div className="card-actions justify-center gap-2 py-3">
+                                <LuFacebook className='text-2xl'></LuFacebook>
+                                <FaTwitter className='text-2xl'></FaTwitter>
+                                <FaLinkedin className='text-2xl'></FaLinkedin>
+                                <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
+                                <button className='' title={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
+
+                            </div>
+                        </div>
+                    </div>)
+                }
+
+
+            </div>
+
+
+            <dialog id="my_modal_4" className="modal">
+                <div className="modal-box">
+                    <form action="" method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <form action="" method="dialog" className='py-4'>
+                        {/* if there is a button in form, it will close the modal */}
+
+
+                        <h3 className='text-center font-bold'>Enter Item Details</h3>
+                        <div className="form-control w-full ">
+                            <label className="label">
+                                <span className="label-text">Item Name</span>
+
+                            </label>
+                            <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemName(e.target.value)} required />
+
+                        </div>
+                        <div className='flex justify-center gap-2'>
+
+                            <div className="form-control w-full ">
+                                <label className="label">
+                                    <span className="label-text">Title</span>
+
+                                </label>
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemDes(e.target.value)} required />
+
+                            </div>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">WhatsApp Number</span>
+
+                                </label>
+                                <input type="number" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setWhatsApp(e.target.files[0])} required />
+
+                            </div>
+
+                        </div>
+
+                        <div className='flex justify-center gap-2'>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">FaceBook ID Link</span>
+
+                                </label>
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setFb(e.target.value)} required />
+
+                            </div>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Linkedin ID Link</span>
+
+                                </label>
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setLinkdin(e.target.value)} required />
+
+                            </div>
+
+                        </div>
+                        <div className='flex justify-center gap-2'>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Tweeter ID Link</span>
+
+                                </label>
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setTweeter(e.target.files[0])} required />
+
+                            </div>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">Picture</span>
+
+                                </label>
+                                <input type="file" className="file-input file-input-bordered file-input-secondary w-full max-w-xs" onChange={(e) => setPhoto(e.target.files[0])} required />
+
+                            </div>
+
+                        </div>
+
+                        <div className="form-control w-full mt-5">
+
+                            <input type="submit" value='Submit' className="btn btn-secondary w-full " onClick={handleData} />
+
+                        </div>
+                    </form>
+                </div>
+            </dialog>
+
         </div>
     );
 };

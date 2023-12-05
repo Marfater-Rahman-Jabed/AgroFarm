@@ -7,6 +7,9 @@ import Contacts from "../Pages/Contacts/Contacts";
 import Blogs from "../Pages/Blogs/Blogs";
 import ProductsVegetable from "../Pages/ProductsVegetable/ProductsVegetable";
 import AddItem from "../Pages/AddItem/AddItem";
+import ProductsGrainOil from "../Pages/ProductsGrainOil/ProductsGrainOil";
+import ProductsFish from "../Pages/ProductsFish/ProductsFish";
+import ProductsFruit from "../Pages/ProductsFruit/ProductsFruit";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +35,21 @@ export const router = createBrowserRouter([
             {
                 path: '/ProductsVegetable',
                 element: <ProductsVegetable></ProductsVegetable>
+                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+            },
+            {
+                path: '/ProductsGrain',
+                element: <ProductsGrainOil></ProductsGrainOil>
+                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+            },
+            {
+                path: '/ProductsFish',
+                element: <ProductsFish></ProductsFish>
+                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+            },
+            {
+                path: '/productsFruits',
+                element: <ProductsFruit></ProductsFruit>
                 // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
             },
             {

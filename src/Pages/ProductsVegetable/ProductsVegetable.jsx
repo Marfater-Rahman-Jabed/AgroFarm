@@ -12,8 +12,8 @@ import { MdDeleteOutline } from "react-icons/md";
 
 
 const Products = () => {
-    const UrlId = window.location.pathname.split('/')[2];
-    console.log(UrlId)
+    // const UrlId = window.location.pathname.split('/')[2];
+    // console.log(UrlId)
     const imageKey = import.meta.env.VITE_imagekey;
     const [itemName, setItemName] = useState('')
     const [itemDes, setItemDes] = useState('')
@@ -104,6 +104,8 @@ const Products = () => {
     }
 
 
+
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -139,6 +141,7 @@ const Products = () => {
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
                                         <ReactWhatsapp number="+8801827717200" className=" animate-bounce hover:animate-none" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} title={`Contact For Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
                                         <button className='' title={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>
+
                                     </div>
                                 </div>
                             </div>)
@@ -147,13 +150,22 @@ const Products = () => {
                 </>
             }
 
+
+
+
+
+
+
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
             <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
+                    <form action="" method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
                     <form action="" method="dialog" className='py-4'>
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+
 
                         <h3 className='text-center font-bold'>Enter Item Details</h3>
                         <div className="form-control w-full ">
@@ -161,7 +173,7 @@ const Products = () => {
                                 <span className="label-text">Item Name</span>
 
                             </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemName(e.target.value)} />
+                            <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemName(e.target.value)} required />
 
                         </div>
                         <div className="form-control w-full ">
@@ -169,7 +181,7 @@ const Products = () => {
                                 <span className="label-text">Item Description</span>
 
                             </label>
-                            <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemDes(e.target.value)} />
+                            <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full " onChange={(e) => setItemDes(e.target.value)} required />
 
                         </div>
                         <div className='flex justify-center gap-2'>
@@ -178,7 +190,7 @@ const Products = () => {
                                     <span className="label-text">Price</span>
 
                                 </label>
-                                <input type="number" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setPrice(e.target.value)} />
+                                <input type="number" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setPrice(e.target.value)} required />
 
                             </div>
                             <div className="form-control w-full max-w-xs">
@@ -186,7 +198,7 @@ const Products = () => {
                                     <span className="label-text">Picture</span>
 
                                 </label>
-                                <input type="file" className="file-input file-input-bordered file-input-secondary w-full max-w-xs" onChange={(e) => setPhoto(e.target.files[0])} />
+                                <input type="file" className="file-input file-input-bordered file-input-secondary w-full max-w-xs" onChange={(e) => setPhoto(e.target.files[0])} required />
 
                             </div>
                         </div>
@@ -199,6 +211,10 @@ const Products = () => {
                     </form>
                 </div>
             </dialog>
+
+
+
+
 
         </div>
     );

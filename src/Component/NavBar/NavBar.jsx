@@ -26,9 +26,9 @@ const NavBar = () => {
                                         <label tabIndex={0} className=" m-1 bg-white flex border-separate hover:border-b-2 border-orange-500 font-semibold px-2">PRODUCTS <span ><CiCircleChevDown className=' w-6 h-5 text-3xl'></CiCircleChevDown></span></label>
                                         <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100  w-64 ms-24">
                                             <li className='hover:bg-orange-500 hover:text-white ' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsVegetable' >Vegetable</Link ></li>
-                                            <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsOilSeed' >Grain & Oilseed</Link ></li>
+                                            <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsGrain' >Grain & Oilseed</Link ></li>
                                             <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsFruits' >Fruits & Nut</Link ></li>
-                                            <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsFish' >Fish Item</Link ></li>
+                                            <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsFish' >Fish Item</Link ></li>
                                         </ul>
                                     </div>
                                     <div className='px-3 rounded-0 mt-2'><NavLink to='/blog' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold' onClick={() => setOpen(prev => !prev)}>BLOG</NavLink></div>
@@ -57,9 +57,9 @@ const NavBar = () => {
                             {open &&
                                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100  w-64 font-semibold">
                                     <li className='hover:bg-orange-500 hover:text-white ' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsVegetable' >Vegetable</Link ></li>
-                                    <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsOilSeed' >Grain & Oilseed</Link ></li>
+                                    <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsGrain' >Grain & Oilseed</Link ></li>
                                     <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsFruits' >Fruits & Nut</Link ></li>
-                                    <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/productsFish' >Fish Item</Link ></li>
+                                    <li className='hover:bg-orange-500 hover:text-white' onClick={() => setOpen(prev => !prev)}><Link to='/ProductsFish' >Fish Item</Link ></li>
                                 </ul>
                             }
                         </div>
