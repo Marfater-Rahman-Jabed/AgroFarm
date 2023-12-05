@@ -1,14 +1,18 @@
 import './OurTeam.css'
 // import team1 from '../../assets/team1.jpg'
-import { LuFacebook } from "react-icons/lu";
+import { FaFacebookSquare } from "react-icons/fa";
+
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
-import { FaSquareWhatsapp } from "react-icons/fa6";
+// import { FaSquareWhatsapp } from "react-icons/fa6";
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { MdDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import ReactWhatsapp from 'react-whatsapp';
+import { BsWhatsapp } from 'react-icons/bs';
+import { Fade } from 'react-awesome-reveal';
 
 const OurTeam = () => {
 
@@ -119,27 +123,29 @@ const OurTeam = () => {
                 <button className='btn btn-outline btn-secondary px-12' onClick={() => document.getElementById('my_modal_4').showModal()}>ADD TEAM MEMBER</button>
 
             </div>
-            <div className="grid  lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
+            <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
                 {
-                    myData?.map((member, i) => <div key={i} className="card  bg-base-100 shadow-2xl">
-                        <figure><PhotoProvider>
-                            <PhotoView src={member?.picture}>
-                                <img src={member?.picture} alt="Shoes" className="w-full h-60 zoom cursor-pointer" />
-                            </PhotoView>
-                        </PhotoProvider></figure>
-                        <div className="card-body">
-                            <h2 className="font-bold text-xl text-center">{member?.name}</h2>
-                            <p className="font-semibold text-xl text-center">{member?.title} </p>
-                            <div className="card-actions justify-center gap-2 py-3">
-                                <LuFacebook className='text-2xl'></LuFacebook>
-                                <FaTwitter className='text-2xl'></FaTwitter>
-                                <FaLinkedin className='text-2xl'></FaLinkedin>
-                                <FaSquareWhatsapp className='text-2xl'></FaSquareWhatsapp >
-                                <button className='' title={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
+                    myData?.map((member, i) => <Fade key={i} direction='left' duration={2000} >
+                        <div className="card  bg-base-100 shadow-2xl">
+                            <figure><PhotoProvider>
+                                <PhotoView src={member?.picture}>
+                                    <img src={member?.picture} alt="Shoes" className="w-full h-60 zoom cursor-pointer" />
+                                </PhotoView>
+                            </PhotoProvider></figure>
+                            <div className="card-body">
+                                <h2 className="font-bold text-xl text-center">{member?.name}</h2>
+                                <p className="font-semibold text-xl text-center">{member?.title} </p>
+                                <div className="card-actions justify-center gap-2 py-3">
+                                    <a href={member?.fb} target='__blank'><FaFacebookSquare className='text-2xl'></FaFacebookSquare></a>
+                                    <a href={member?.tweeter} target='__blank'><FaTwitter className='text-2xl'></FaTwitter></a>
+                                    <a href={member?.linkdin} target='__blank'><FaLinkedin className='text-2xl'></FaLinkedin></a>
+                                    <ReactWhatsapp number={`+88${member?.whatsApp}`} message={`Hi ${member?.name}. `} className="tooltip  tooltip-secondary" data-tip={`Contact with ${member?.name}`}><BsWhatsapp className=' mx-auto text-2xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
+                                    <button className="tooltip  tooltip-secondary" data-tip={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
 
+                                </div>
                             </div>
                         </div>
-                    </div>)
+                    </Fade>)
                 }
 
 
@@ -151,7 +157,7 @@ const OurTeam = () => {
                     <form action="" method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
-                    <form action="" method="dialog" className='py-4'>
+                    <form action="" method="dialog" className='py-4' onSubmit={handleData}>
                         {/* if there is a button in form, it will close the modal */}
 
 
@@ -179,7 +185,7 @@ const OurTeam = () => {
                                     <span className="label-text">WhatsApp Number</span>
 
                                 </label>
-                                <input type="number" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setWhatsApp(e.target.files[0])} required />
+                                <input type="number" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setWhatsApp(e.target.value)} />
 
                             </div>
 
@@ -191,7 +197,7 @@ const OurTeam = () => {
                                     <span className="label-text">FaceBook ID Link</span>
 
                                 </label>
-                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setFb(e.target.value)} required />
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setFb(e.target.value)} />
 
                             </div>
                             <div className="form-control w-full max-w-xs">
@@ -199,7 +205,7 @@ const OurTeam = () => {
                                     <span className="label-text">Linkedin ID Link</span>
 
                                 </label>
-                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setLinkdin(e.target.value)} required />
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setLinkdin(e.target.value)} />
 
                             </div>
 
@@ -210,7 +216,7 @@ const OurTeam = () => {
                                     <span className="label-text">Tweeter ID Link</span>
 
                                 </label>
-                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setTweeter(e.target.files[0])} required />
+                                <input type="text" placeholder="Type here" className="input input-bordered input-secondary w-full max-w-xs" onChange={(e) => setTweeter(e.target.value)} />
 
                             </div>
                             <div className="form-control w-full max-w-xs">
@@ -226,7 +232,7 @@ const OurTeam = () => {
 
                         <div className="form-control w-full mt-5">
 
-                            <input type="submit" value='Submit' className="btn btn-secondary w-full " onClick={handleData} />
+                            <input type="submit" value='Submit' className="btn btn-secondary w-full " />
 
                         </div>
                     </form>

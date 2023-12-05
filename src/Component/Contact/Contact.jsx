@@ -1,7 +1,7 @@
 import emailjs from '@emailjs/browser';
 import { useRef } from 'react';
 import bgAbout from '../../assets/lastAbout.png'
-import GoogleMapComponent from '../GoogleMapComponent/GoogleMapComponent';
+// import GoogleMapComponent from '../GoogleMapComponent/GoogleMapComponent';
 const Contact = () => {
     const form = useRef();
     const handleEmail = (e) => {
@@ -74,7 +74,7 @@ const Contact = () => {
                 </div>
             </div>
 
-            <GoogleMapComponent></GoogleMapComponent>
+            {/* <GoogleMapComponent></GoogleMapComponent> */}
         </div>
     );
 };

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import bgAbout from '../../assets/lastAbout.png'
 import { toast } from "react-toastify";
 import { MdDeleteOutline } from "react-icons/md";
+import { Fade } from "react-awesome-reveal";
 const ProductsGrainOil = () => {
 
     const imageKey = import.meta.env.VITE_imagekey;
@@ -122,25 +123,27 @@ const ProductsGrainOil = () => {
 
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 lg:px-20 px-6 py-10">
                             {
-                                myData?.map((product, i) => <div key={i} className="card lg:w-96 bg-slate-300 shadow-xl">
-                                    <figure>
-                                        <PhotoProvider>
-                                            <PhotoView src={product?.picture}>
-                                                <img src={product?.picture} alt="Shoes" className="w-full h-60 zoom cursor-pointer" />
-                                            </PhotoView>
-                                        </PhotoProvider>
-                                    </figure>
-                                    <div className="card-body">
-                                        <h2 className="card-title text-center text-3xl font-bold">{product?.name}</h2>
-                                        <p className="text-xl font-bold">Price: $ {product?.price} / kg</p>
-                                        <div className=" flex justify-between gap-3">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                                            <ReactWhatsapp number="+8801827717200" className=" animate-bounce hover:animate-none" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} title={`Contact For Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
-                                            <button className='' title={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>
+                                myData?.map((product, i) => <Fade key={i} direction="left" duration={2000}>
+                                    <div className="card lg:w-96 bg-slate-300 shadow-xl">
+                                        <figure>
+                                            <PhotoProvider>
+                                                <PhotoView src={product?.picture}>
+                                                    <img src={product?.picture} alt="Shoes" className="w-full h-60 zoom cursor-pointer" />
+                                                </PhotoView>
+                                            </PhotoProvider>
+                                        </figure>
+                                        <div className="card-body">
+                                            <h2 className="card-title text-center text-3xl font-bold">{product?.name}</h2>
+                                            <p className="text-xl font-bold">Price: $ {product?.price} / kg</p>
+                                            <div className=" flex justify-between gap-3">
+                                                <p>{product?.Des ? product?.Des : `Lorem ipsum dolor sit amet consectetur adipisicing elit.`} </p>
+                                                <ReactWhatsapp number="+8801827717200" className=" animate-bounce hover:animate-none tooltip tooltip-secondary" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} data-tip={`Contact for Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
+                                                <button className="tooltip  tooltip-secondary" data-tip={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>)
+                                </Fade>)
                             }
                         </div>
                     </>
