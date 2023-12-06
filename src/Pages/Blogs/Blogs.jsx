@@ -1,56 +1,86 @@
-import blog1 from '../../assets/blog3.jpg'
-import blog2 from '../../assets/blog2.jpg'
-import blog3 from '../../assets/blog1.jpg'
+
+
+import { Link } from 'react-router-dom';
 import bgAbout from '../../assets/lastAbout.png'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Fade } from 'react-awesome-reveal';
+import { MdDeleteOutline } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import { useQuery } from 'react-query';
+import Loading from '../../Component/Loading/Loading';
+
 const Blogs = () => {
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+    const [isLoading, setIsLoading] = useState(false)
+    const { data: blogData = [], refetch } = useQuery({
+        queryKey: ['BlogDatas'],
+        queryFn: async () => {
+            setIsLoading(true)
+            const res = await fetch(`http://localhost:5000/blogs`)
+            const data = res.json()
+            setIsLoading(false)
+            return data;
+        }
+    })
+    const handleDelete = (id) => {
+
+        fetch(`http://localhost:5000/deleteBlog/${id}`, {
+            method: 'DELETE',
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                toast.success(`Successfully Removed`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                refetch(`http://localhost:5000/blogs`)
+            })
+    }
+
+
     return (
         <div>
             <div className='py-36' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                <h3 className='text-7xl text-center text-white font-bold'> Our Blogs</h3>
+                <h3 className='text-7xl text-center text-white font-bold'> Our All Blogs</h3>
             </div>
-            <div className="card mx-3  bg-base-100 shadow-xl">
-                <span className='lg:px-28 md:px-10 py-12'>
-                    <h3 className='font-semibold'>15 August 2023</h3>
-                    <h2 className="text-4xl font-bold">Can a Smoothie Supercharge Days Future ?</h2>
-                </span>
-                <figure><img src={blog1} alt="Shoes" className="lg:w-[70vw] md:w-[75vw] lg:h-[70vh] md:h-[40vh]" /></figure>
-                <div className="card-body">
 
-                    <p className='text-justify lg:px-28 md:px-10'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos ab iure sit quo, quis culpa iste dolorum natus magnam quos commodi officiis, illo maiores inventore voluptates enim laudantium qui minus soluta harum atque? Nobis velit qui beatae natus consequatur quo pariatur voluptates illum possimus est amet, veniam dignissimos mollitia ab eos nulla officiis perferendis! Vero quas molestiae sint soluta, voluptates assumenda facere ut dolorem rem accusamus aliquid! Beatae accusamus sint commodi libero, nihil veritatis architecto vel quidem nulla illum et officiis non necessitatibus nesciunt tempora odit voluptatem. Nostrum ut velit, fugiat veritatis cumque laborum corporis voluptas reprehenderit nisi excepturi saepe? Optio, quis in illum esse quidem unde fuga. Mollitia corporis officiis dolor voluptas cumque ab corrupti id nemo maxime? Est esse ex ab at beatae animi sed tenetur obcaecati alias ratione! Modi rerum, saepe quisquam neque maiores tenetur laboriosam velit nobis eius? Tenetur eaque rerum unde maxime minima deserunt! Veniam voluptatum dolores molestiae maiores nam pariatur a, rerum dolore, consectetur nesciunt, dolorem iste incidunt. Necessitatibus vel illum laboriosam quidem animi odio quam quo aspernatur fugit! Quos molestiae ea quasi, id iure quaerat praesentium voluptas corrupti libero sit accusamus fugiat veniam molestias atque adipisci laborum nobis perferendis eius alias quam delectus, rem illo? Quia praesentium adipisci, tenetur maxime ab officia vero saepe sint perferendis expedita sequi nesciunt, voluptates fugit labore molestiae, fuga velit culpa voluptatum. Aperiam consectetur rerum adipisci quam, asperiores iste accusamus placeat eveniet ipsam voluptatibus modi illo tempore assumenda esse quisquam mollitia quia, laudantium obcaecati, corporis nemo? Eligendi maiores quos, perferendis ullam nam, minus libero exercitationem quidem similique amet assumenda earum repellendus officiis. Optio esse maxime est. Eaque tempora dolorem veniam quas aliquid minima accusantium fugit, iure modi labore possimus, voluptatibus consequuntur similique nostrum incidunt vel fugiat quia ab, provident delectus error? Voluptas tempore doloribus, dicta iusto, odio ipsa nulla pariatur incidunt numquam id a totam magnam laudantium porro exercitationem non temporibus voluptatem odit dolorum cum! In cumque saepe et voluptatem nesciunt quaerat quae ea. Blanditiis, officia dolorem ad rerum iusto rem eveniet quas excepturi dolore, beatae molestiae repudiandae? Rerum, ducimus porro. Amet facere corrupti consectetur voluptatem cum dolorem nemo, doloremque ab aliquid, maxime, nobis deleniti. Error nihil soluta ad culpa, quae odit totam dicta accusantium dolor quaerat blanditiis numquam saepe impedit officiis tempore voluptatibus, minima fuga tempora. Tenetur dolorum sapiente eligendi fugit quos libero recusandae eius adipisci tempora, ipsum ratione ut qui? Est odit odio quasi explicabo fuga!</p>
+            <div className='py-10 lg:px-16 px-4'>
+                {
+                    isLoading ? <Loading></Loading> : <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
+                        {
+                            blogData?.slice(0, 3).map((data, i) => <div key={i} className="card  bg-base-100 shadow-xl mr-2">
 
-                </div>
+                                <figure> <Fade duration={1500} direction="down"><img src={data?.picture} alt="Shoes" className="w-[100vw] h-72 zoom" /></Fade></figure>
+
+                                <div className="card-body">
+                                    <h2 className="card-title text-slate-500">{data?.date.slice(8, 10)} {data?.date.slice(4, 7)} {data?.date.slice(11, 16)}</h2>
+                                    <h2 className="card-title uppercase">{data?.name}</h2>
+                                    <p className="text-justify">{data?.blog.slice(0, 250)}...<Link className="text-blue-600" to={`/blogDetails/${data?._id}`} state={{ from: data }}>see more</Link></p>
+                                    <div className='flex justify-end'>
+                                        <button className="tooltip  tooltip-secondary" data-tip={`Delete ${data?.name}`} onClick={() => handleDelete(data?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
+                                    </div>
+
+                                </div>
+                            </div>)
+                        }
+                    </div>
+
+
+                }
+
+
             </div>
-            <div className="divider py-10"></div>
-            <div className="card mx-3  bg-base-100 shadow-xl">
-                <span className='lg:px-28 md:px-10 py-12'>
-                    <h3 className='font-semibold'>12 October 2023</h3>
-                    <h2 className="text-4xl font-bold">How to make your breakfast easy and yummy</h2>
-                </span>
-                <figure><img src={blog2} alt="Shoes" className="lg:w-[70vw] md:w-[75vw] lg:h-[70vh] md:h-[40vh]" /></figure>
-                <div className="card-body">
-
-                    <p className='text-justify lg:px-28 md:px-10'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos ab iure sit quo, quis culpa iste dolorum natus magnam quos commodi officiis, illo maiores inventore voluptates enim laudantium qui minus soluta harum atque? Nobis velit qui beatae natus consequatur quo pariatur voluptates illum possimus est amet, veniam dignissimos mollitia ab eos nulla officiis perferendis! Vero quas molestiae sint soluta, voluptates assumenda facere ut dolorem rem accusamus aliquid! Beatae accusamus sint commodi libero, nihil veritatis architecto vel quidem nulla illum et officiis non necessitatibus nesciunt tempora odit voluptatem. Nostrum ut velit, fugiat veritatis cumque laborum corporis voluptas reprehenderit nisi excepturi saepe? Optio, quis in illum esse quidem unde fuga. Mollitia corporis officiis dolor voluptas cumque ab corrupti id nemo maxime? Est esse ex ab at beatae animi sed tenetur obcaecati alias ratione! Modi rerum, saepe quisquam neque maiores tenetur laboriosam velit nobis eius? Tenetur eaque rerum unde maxime minima deserunt! Veniam voluptatum dolores molestiae maiores nam pariatur a, rerum dolore, consectetur nesciunt, dolorem iste incidunt. Necessitatibus vel illum laboriosam quidem animi odio quam quo aspernatur fugit! Quos molestiae ea quasi, id iure quaerat praesentium voluptas corrupti libero sit accusamus fugiat veniam molestias atque adipisci laborum nobis perferendis eius alias quam delectus, rem illo? Quia praesentium adipisci, tenetur maxime ab officia vero saepe sint perferendis expedita sequi nesciunt, voluptates fugit labore molestiae, fuga velit culpa voluptatum. Aperiam consectetur rerum adipisci quam, asperiores iste accusamus placeat eveniet ipsam voluptatibus modi illo tempore assumenda esse quisquam mollitia quia, laudantium obcaecati, corporis nemo? Eligendi maiores quos, perferendis ullam nam, minus libero exercitationem quidem similique amet assumenda earum repellendus officiis. Optio esse maxime est. Eaque tempora dolorem veniam quas aliquid minima accusantium fugit, iure modi labore possimus, voluptatibus consequuntur similique nostrum incidunt vel fugiat quia ab, provident delectus error? Voluptas tempore doloribus, dicta iusto, odio ipsa nulla pariatur incidunt numquam id a totam magnam laudantium porro exercitationem non temporibus voluptatem odit dolorum cum! In cumque saepe et voluptatem nesciunt quaerat quae ea. Blanditiis, officia dolorem ad rerum iusto rem eveniet quas excepturi dolore, beatae molestiae repudiandae? Rerum, ducimus porro. Amet facere corrupti consectetur voluptatem cum dolorem nemo, doloremque ab aliquid, maxime, nobis deleniti. Error nihil soluta ad culpa, quae odit totam dicta accusantium dolor quaerat blanditiis numquam saepe impedit officiis tempore voluptatibus, minima fuga tempora. Tenetur dolorum sapiente eligendi fugit quos libero recusandae eius adipisci tempora, ipsum ratione ut qui? Est odit odio quasi explicabo fuga!</p>
-
-                </div>
-            </div>
-            <div className="divider py-10"></div>
-            <div className="card mx-3  bg-base-100 shadow-xl">
-                <span className='lg:px-28 md:px-10 py-12'>
-                    <h3 className='font-semibold'>17 July 2023</h3>
-                    <h2 className="text-4xl font-bold">Tips from our team: Making Younghurt and fruits</h2>
-                </span>
-                <figure><img src={blog3} alt="Shoes" className="lg:w-[70vw] md:w-[75vw] lg:h-[70vh] md:h-[40vh]" /></figure>
-                <div className="card-body">
-
-                    <p className='text-justify lg:px-28 md:px-10'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos ab iure sit quo, quis culpa iste dolorum natus magnam quos commodi officiis, illo maiores inventore voluptates enim laudantium qui minus soluta harum atque? Nobis velit qui beatae natus consequatur quo pariatur voluptates illum possimus est amet, veniam dignissimos mollitia ab eos nulla officiis perferendis! Vero quas molestiae sint soluta, voluptates assumenda facere ut dolorem rem accusamus aliquid! Beatae accusamus sint commodi libero, nihil veritatis architecto vel quidem nulla illum et officiis non necessitatibus nesciunt tempora odit voluptatem. Nostrum ut velit, fugiat veritatis cumque laborum corporis voluptas reprehenderit nisi excepturi saepe? Optio, quis in illum esse quidem unde fuga. Mollitia corporis officiis dolor voluptas cumque ab corrupti id nemo maxime? Est esse ex ab at beatae animi sed tenetur obcaecati alias ratione! Modi rerum, saepe quisquam neque maiores tenetur laboriosam velit nobis eius? Tenetur eaque rerum unde maxime minima deserunt! Veniam voluptatum dolores molestiae maiores nam pariatur a, rerum dolore, consectetur nesciunt, dolorem iste incidunt. Necessitatibus vel illum laboriosam quidem animi odio quam quo aspernatur fugit! Quos molestiae ea quasi, id iure quaerat praesentium voluptas corrupti libero sit accusamus fugiat veniam molestias atque adipisci laborum nobis perferendis eius alias quam delectus, rem illo? Quia praesentium adipisci, tenetur maxime ab officia vero saepe sint perferendis expedita sequi nesciunt, voluptates fugit labore molestiae, fuga velit culpa voluptatum. Aperiam consectetur rerum adipisci quam, asperiores iste accusamus placeat eveniet ipsam voluptatibus modi illo tempore assumenda esse quisquam mollitia quia, laudantium obcaecati, corporis nemo? Eligendi maiores quos, perferendis ullam nam, minus libero exercitationem quidem similique amet assumenda earum repellendus officiis. Optio esse maxime est. Eaque tempora dolorem veniam quas aliquid minima accusantium fugit, iure modi labore possimus, voluptatibus consequuntur similique nostrum incidunt vel fugiat quia ab, provident delectus error? Voluptas tempore doloribus, dicta iusto, odio ipsa nulla pariatur incidunt numquam id a totam magnam laudantium porro exercitationem non temporibus voluptatem odit dolorum cum! In cumque saepe et voluptatem nesciunt quaerat quae ea. Blanditiis, officia dolorem ad rerum iusto rem eveniet quas excepturi dolore, beatae molestiae repudiandae? Rerum, ducimus porro. Amet facere corrupti consectetur voluptatem cum dolorem nemo, doloremque ab aliquid, maxime, nobis deleniti. Error nihil soluta ad culpa, quae odit totam dicta accusantium dolor quaerat blanditiis numquam saepe impedit officiis tempore voluptatibus, minima fuga tempora. Tenetur dolorum sapiente eligendi fugit quos libero recusandae eius adipisci tempora, ipsum ratione ut qui? Est odit odio quasi explicabo fuga!</p>
-
-                </div>
-            </div>
-            <div className="divider py-10"></div>
 
         </div>
     );

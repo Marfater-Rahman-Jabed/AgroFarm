@@ -13,7 +13,8 @@ import { PhotoProvider, PhotoView } from 'react-photo-view';
 import ReactWhatsapp from 'react-whatsapp';
 import { BsWhatsapp } from 'react-icons/bs';
 import { Fade } from 'react-awesome-reveal';
-
+import { Link } from 'react-router-dom';
+import '../../Component/About/About.css'
 const OurTeam = () => {
 
     const imageKey = import.meta.env.VITE_imagekey;
@@ -120,12 +121,12 @@ const OurTeam = () => {
                 <p className="text-5xl font-bold mb-10">Our Team</p>
             </div>
             <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
-                <button className='btn btn-outline btn-secondary px-12' onClick={() => document.getElementById('my_modal_4').showModal()}>ADD TEAM MEMBER</button>
+                <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_member').showModal()}>ADD TEAM MEMBER</button>
 
             </div>
             <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
                 {
-                    myData?.map((member, i) => <Fade key={i} direction='left' duration={2000} >
+                    myData?.slice(0, 4).map((member, i) => <Fade key={i} direction='left' duration={2000} >
                         <div className="card  bg-base-100 shadow-2xl">
                             <figure><PhotoProvider>
                                 <PhotoView src={member?.picture}>
@@ -151,8 +152,14 @@ const OurTeam = () => {
 
             </div>
 
-
-            <dialog id="my_modal_4" className="modal">
+            {myData?.length > 0 &&
+                <div className='flex justify-center py-10'>
+                    <Link to='/allMember'>
+                        <button className='btn  btn-primary px-12'>See All Member</button>
+                    </Link>
+                </div>
+            }
+            <dialog id="my_modal_member" className="modal">
                 <div className="modal-box">
                     <form action="" method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

@@ -10,6 +10,9 @@ import bgAbout from '../../assets/lastAbout.png'
 import { toast } from "react-toastify";
 import { MdDeleteOutline } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
+import Loading from "../../Component/Loading/Loading";
+import Spinner from "../../Component/Spinner/Spinner";
+import '../../Component/About/About.css'
 const ProductsFish = () => {
 
     const imageKey = import.meta.env.VITE_imagekey;
@@ -17,14 +20,15 @@ const ProductsFish = () => {
     const [itemDes, setItemDes] = useState('')
     const [price, setPrice] = useState('')
     const [photo, setPhoto] = useState('')
-    // const myData = useLoaderData()
-    const { data: myData = [], refetch } = useQuery({
-        queryKey: ['Datas'],
+    const [isLoading, setIsLoading] = useState(false)
+    const [isUploadLoading, setIsUploadLoading] = useState(false)
+    const { data: fishData = [], refetch } = useQuery({
+        queryKey: ['fishDatas'],
         queryFn: async () => {
-            // setIsLoading(true)
+            setIsLoading(true)
             const res = await fetch(`http://localhost:5000/productsFish`)
             const data = res.json()
-            // setIsLoading(false)
+            setIsLoading(false)
             return data;
         }
     })
@@ -55,6 +59,7 @@ const ProductsFish = () => {
 
 
     const handleData = () => {
+        setIsUploadLoading(true)
         console.log('submitted')
         const formData = new FormData();
         formData.append('image', photo);
@@ -94,7 +99,7 @@ const ProductsFish = () => {
                                 progress: undefined,
                                 theme: "colored",
                             });
-
+                            setIsUploadLoading(false)
                             refetch()
                         })
                 }
@@ -111,19 +116,19 @@ const ProductsFish = () => {
     return (
         <div>
             <div className="">
-                {
-                    <>
-                        <div className='py-24' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-                            <h3 className='text-7xl text-center text-white font-bold'>Our Fish  Items</h3>
-                        </div>
-                        <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
-                            <button className='btn btn-outline btn-secondary px-12' onClick={() => document.getElementById('my_modal_4').showModal()}>ADD ITEMS</button>
 
-                        </div>
+                <div>
+                    <div className='py-24' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
+                        <h3 className='text-7xl text-center text-white font-bold'>Our Fish  Items</h3>
+                    </div>
+                    <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
+                        <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_Fish').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD ITEMS'}</button>
 
+                    </div>
+                    {isLoading ? <Loading></Loading> :
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 lg:px-20 px-6 py-10">
                             {
-                                myData?.map((product, i) => <Fade key={i} direction="left" duration={2000}>
+                                fishData?.map((product, i) => <Fade key={i} direction="left" duration={2000}>
                                     <div className="card lg:w-96 bg-slate-300 shadow-xl">
                                         <figure>
                                             <PhotoProvider>
@@ -137,7 +142,7 @@ const ProductsFish = () => {
                                             <p className="text-xl font-bold">Price: $ {product?.price} / kg</p>
                                             <div className=" flex justify-between gap-3">
                                                 <p>{product?.Des ? product?.Des : `Lorem ipsum dolor sit amet consectetur adipisicing elit.`} </p>
-                                                <ReactWhatsapp number="+8801827717200" className=" animate-bounce hover:animate-none tooltip tooltip-secondary" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} data-tip={`Contact for Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
+                                                <ReactWhatsapp number="+8801827717200" className=" animate-pulse  hover:animate-none tooltip tooltip-secondary" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} data-tip={`Contact for Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
                                                 <button className="tooltip  tooltip-secondary" data-tip={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>
 
                                             </div>
@@ -146,8 +151,9 @@ const ProductsFish = () => {
                                 </Fade>)
                             }
                         </div>
-                    </>
-                }
+                    }
+                </div>
+
 
 
 
@@ -157,7 +163,7 @@ const ProductsFish = () => {
 
                 {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
-                <dialog id="my_modal_4" className="modal">
+                <dialog id="my_modal_Fish" className="modal">
                     <div className="modal-box">
                         <form action="" method="dialog">
                             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

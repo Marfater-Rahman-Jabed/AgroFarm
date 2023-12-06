@@ -49,7 +49,7 @@ const NavBar = () => {
                         </span>
                     </div>
                 </div>
-                <div className="navbar-center hidden lg:flex">
+                <div className="navbar-center lg:pe-4 hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         <div className='px-3 rounded-0 mt-2'><NavLink to='/' className='border-separate hover:border-b-2 hover:border-orange-500  font-semibold'>HOME</NavLink></div>
                         <div className="dropdown dropdown-hover mt-1 px-3">

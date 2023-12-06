@@ -6,10 +6,12 @@ import Abouts from "../Pages/Abouts/Abouts";
 import Contacts from "../Pages/Contacts/Contacts";
 import Blogs from "../Pages/Blogs/Blogs";
 import ProductsVegetable from "../Pages/ProductsVegetable/ProductsVegetable";
-import AddItem from "../Pages/AddItem/AddItem";
 import ProductsGrainOil from "../Pages/ProductsGrainOil/ProductsGrainOil";
 import ProductsFish from "../Pages/ProductsFish/ProductsFish";
 import ProductsFruit from "../Pages/ProductsFruit/ProductsFruit";
+import BlogDetails from "../Pages/Blogs/BlogDetails";
+import AllMember from "../Pages/AllMember/AllMember";
+import Login from "../Pages/Login/Login";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +35,10 @@ export const router = createBrowserRouter([
                 element: <Blogs></Blogs>
             },
             {
+                path: '/blogDetails/:id',
+                element: <BlogDetails></BlogDetails>
+            },
+            {
                 path: '/ProductsVegetable',
                 element: <ProductsVegetable></ProductsVegetable>
                 // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
@@ -40,21 +46,25 @@ export const router = createBrowserRouter([
             {
                 path: '/ProductsGrain',
                 element: <ProductsGrainOil></ProductsGrainOil>
-                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+
             },
             {
                 path: '/ProductsFish',
                 element: <ProductsFish></ProductsFish>
-                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+
             },
             {
                 path: '/productsFruits',
                 element: <ProductsFruit></ProductsFruit>
-                // loader: ({ params }) => fetch(`http://localhost:5000/products/${params.id}`)
+
             },
             {
-                path: '/addItem',
-                element: <AddItem></AddItem>
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/allMember',
+                element: <AllMember></AllMember>
             },
         ]
     }
