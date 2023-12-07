@@ -6,7 +6,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 // import { FaSquareWhatsapp } from "react-icons/fa6";
 import { toast } from 'react-toastify'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useQuery } from 'react-query'
 import { MdDeleteOutline } from "react-icons/md";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
@@ -15,8 +15,12 @@ import { BsWhatsapp } from 'react-icons/bs';
 import { Fade } from 'react-awesome-reveal';
 import { Link } from 'react-router-dom';
 import '../../Component/About/About.css'
+import useAdmin from '../../Hooks/useAdmin';
+import { AuthContexts } from '../../Contexts/Contexts';
 const OurTeam = () => {
 
+    const { user } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
     const imageKey = import.meta.env.VITE_imagekey;
     const [itemName, setItemName] = useState('')
     const [itemDes, setItemDes] = useState('')
@@ -120,10 +124,10 @@ const OurTeam = () => {
 
                 <p className="text-5xl font-bold mb-10">Our Team</p>
             </div>
-            <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
+            {Admin && <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
                 <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_member').showModal()}>ADD TEAM MEMBER</button>
 
-            </div>
+            </div>}
             <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">
                 {
                     myData?.slice(0, 4).map((member, i) => <Fade key={i} direction='left' duration={2000} >
@@ -141,7 +145,7 @@ const OurTeam = () => {
                                     <a href={member?.tweeter} target='__blank'><FaTwitter className='text-2xl'></FaTwitter></a>
                                     <a href={member?.linkdin} target='__blank'><FaLinkedin className='text-2xl'></FaLinkedin></a>
                                     <ReactWhatsapp number={`+88${member?.whatsApp}`} message={`Hi ${member?.name}. `} className="tooltip  tooltip-secondary" data-tip={`Contact with ${member?.name}`}><BsWhatsapp className=' mx-auto text-2xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
-                                    <button className="tooltip  tooltip-secondary" data-tip={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
+                                    {Admin && <button className="tooltip  tooltip-secondary" data-tip={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>}
 
                                 </div>
                             </div>

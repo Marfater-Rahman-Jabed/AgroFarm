@@ -5,7 +5,7 @@ import 'react-photo-view/dist/react-photo-view.css';
 import ReactWhatsapp from "react-whatsapp";
 import { BsWhatsapp } from "react-icons/bs";
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import bgAbout from '../../assets/lastAbout.png'
 import { toast } from "react-toastify";
 import { MdDeleteOutline } from "react-icons/md";
@@ -13,8 +13,11 @@ import { Fade } from "react-awesome-reveal";
 import Loading from "../../Component/Loading/Loading";
 import Spinner from "../../Component/Spinner/Spinner";
 import '../../Component/About/About.css'
+import { AuthContexts } from "../../Contexts/Contexts";
+import useAdmin from "../../Hooks/useAdmin";
 const ProductsFish = () => {
-
+    const { user } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
     const imageKey = import.meta.env.VITE_imagekey;
     const [itemName, setItemName] = useState('')
     const [itemDes, setItemDes] = useState('')
@@ -121,10 +124,10 @@ const ProductsFish = () => {
                     <div className='py-24' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                         <h3 className='text-7xl text-center text-white font-bold'>Our Fish  Items</h3>
                     </div>
-                    <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
+                    {Admin && <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
                         <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_Fish').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD ITEMS'}</button>
 
-                    </div>
+                    </div>}
                     {isLoading ? <Loading></Loading> :
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 lg:px-20 px-6 py-10">
                             {
@@ -143,7 +146,7 @@ const ProductsFish = () => {
                                             <div className=" flex justify-between gap-3">
                                                 <p>{product?.Des ? product?.Des : `Lorem ipsum dolor sit amet consectetur adipisicing elit.`} </p>
                                                 <ReactWhatsapp number="+8801827717200" className=" animate-pulse  hover:animate-none tooltip tooltip-secondary" message={`Hi Agro Farm Ltd. I want to deal with you about ${product?.name} item`} data-tip={`Contact for Order ${product?.name}`}><BsWhatsapp className=' mx-auto text-3xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
-                                                <button className="tooltip  tooltip-secondary" data-tip={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>
+                                                {Admin && <button className="tooltip  tooltip-secondary" data-tip={`Delete ${product?.name}`} onClick={() => handleDelete(product?._id)}><MdDeleteOutline className="text-4xl text-error"></MdDeleteOutline></button>}
 
                                             </div>
                                         </div>

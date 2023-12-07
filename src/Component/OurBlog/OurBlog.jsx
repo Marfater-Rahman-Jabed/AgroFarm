@@ -10,17 +10,15 @@ import '../OurTeam/OurTeam.css'
 import { Fade } from "react-awesome-reveal";
 import { Link } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
-
+import useAdmin from "../../Hooks/useAdmin";
+import { useContext } from 'react';
+import { AuthContexts } from '../../Contexts/Contexts';
 const OurBlog = () => {
 
-    // const monthNames = [
-    //     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    //     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Dec'
-    // ];
 
-    // const dateToday = todayDate.toString().slice(8, 10)
-    // const month = todayDate.toString().slice(4, 7)
-    // const year = todayDate.toString().slice(13, 15)
+    const { user } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
+
     const [isUploadLoading, setIsUploadLoading] = useState(false)
     const [itemName, setItemName] = useState('')
     const [itemDes, setItemDes] = useState('')
@@ -120,10 +118,10 @@ const OurBlog = () => {
 
                 <p className="text-5xl font-bold mb-10">Our Blogs</p>
             </div>
-            <div className='flex justify-end lg:px-12 md:px-10 px-4 py-2'>
+            {Admin && <div className='flex justify-end lg:px-12 md:px-10 px-4 py-2'>
                 <button className='btn btn-outline btn-secondary px-12' onClick={() => document.getElementById('my_modal_blog').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD BLOGS'}</button>
 
-            </div>
+            </div>}
             <div className="lg:px-8 md:px-3 px-5">
 
                 <div>
@@ -138,9 +136,9 @@ const OurBlog = () => {
                                         <h2 className="card-title text-slate-500">{data?.date.slice(8, 10)} {data?.date.slice(4, 7)} {data?.date.slice(11, 16)}</h2>
                                         <h2 className="card-title uppercase">{data?.name}</h2>
                                         <p className="text-justify">{data?.blog.slice(0, 250)}...<Link className="text-blue-600" to={`/blogDetails/${data?._id}`} state={{ from: data }}>see more</Link></p>
-                                        <div className='flex justify-end'>
+                                        {Admin && <div className='flex justify-end'>
                                             <button className="tooltip  tooltip-secondary" data-tip={`Delete ${data?.name}`} onClick={() => handleDelete(data?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
-                                        </div>
+                                        </div>}
 
                                     </div>
                                 </div>)

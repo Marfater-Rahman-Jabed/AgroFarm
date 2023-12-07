@@ -3,10 +3,25 @@ import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/agrodemobg.jpg'
 import { CiCircleChevDown } from "react-icons/ci";
 import './NavBar.css'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContexts } from '../../Contexts/Contexts';
+import { toast } from 'react-toastify';
+import useAdmin from '../../Hooks/useAdmin';
 
 const NavBar = () => {
     const [open, setOpen] = useState(true)
+    const { user, LogOut } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
+
+    const handleLogOut = () => {
+        LogOut()
+            .then(() => {
+                toast.success('LogOut SuccessFull !!!')
+                console.log('logged out')
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div className='' style={{ position: "sticky", top: 0, zIndex: 100 }}>
             <div className="navbar bg-white lg:ps-24 md:ps-16 ps-6 py-4">
@@ -66,8 +81,16 @@ const NavBar = () => {
                         <div className='px-3 rounded-0 mt-2'><NavLink to='/blog' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold'>BLOG</NavLink></div>
                         <div className='px-3 rounded-0 mt-2'><NavLink to='/contact' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold'>CONTACT</NavLink></div>
                         <div className='px-3 rounded-0 mt-2'><NavLink to='/about' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold'>ABOUT</NavLink></div>
-                        <li className=' px-3 text-2xl'> | </li>
-                        <div className='px-3 rounded-0 mt-2'><NavLink to='/login' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>LOGIN</NavLink></div>
+
+                        {user ? <>
+                            {Admin && <div className='px-3 rounded-0 mt-2'><NavLink className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' to='/dashboard'>DASHBOARD</NavLink></div>}
+                            <li className=' px-3 text-2xl'> | </li>
+                            <div className='px-3 rounded-0 mt-2'><Link className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' onClick={handleLogOut}>LOGOUT</Link></div>
+                        </> : <>
+                            <li className=' px-3 text-2xl'> | </li>
+                            <div className='px-3 rounded-0 mt-2'><NavLink to='/login' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>LOGIN</NavLink></div>
+                            <div className='px-3 rounded-0 mt-2'><NavLink to='/register' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>REGISTER</NavLink></div>
+                        </>}
                     </ul>
                 </div>
 

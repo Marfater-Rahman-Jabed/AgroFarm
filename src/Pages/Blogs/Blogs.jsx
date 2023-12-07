@@ -2,18 +2,22 @@
 
 import { Link } from 'react-router-dom';
 import bgAbout from '../../assets/lastAbout.png'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { MdDeleteOutline } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { useQuery } from 'react-query';
 import Loading from '../../Component/Loading/Loading';
+import useAdmin from '../../Hooks/useAdmin';
+import { AuthContexts } from '../../Contexts/Contexts';
 
 const Blogs = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+    const { user } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
     const [isLoading, setIsLoading] = useState(false)
     const { data: blogData = [], refetch } = useQuery({
         queryKey: ['BlogDatas'],
@@ -67,9 +71,9 @@ const Blogs = () => {
                                     <h2 className="card-title text-slate-500">{data?.date.slice(8, 10)} {data?.date.slice(4, 7)} {data?.date.slice(11, 16)}</h2>
                                     <h2 className="card-title uppercase">{data?.name}</h2>
                                     <p className="text-justify">{data?.blog.slice(0, 250)}...<Link className="text-blue-600" to={`/blogDetails/${data?._id}`} state={{ from: data }}>see more</Link></p>
-                                    <div className='flex justify-end'>
+                                    {Admin && <div className='flex justify-end'>
                                         <button className="tooltip  tooltip-secondary" data-tip={`Delete ${data?.name}`} onClick={() => handleDelete(data?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
-                                    </div>
+                                    </div>}
 
                                 </div>
                             </div>)

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Fade } from "react-awesome-reveal";
 import { BsWhatsapp } from "react-icons/bs";
 import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
@@ -9,12 +9,16 @@ import { useQuery } from "react-query";
 import { toast } from "react-toastify";
 import ReactWhatsapp from "react-whatsapp";
 import bgAbout from '../../assets/lastAbout.png'
+import { AuthContexts } from "../../Contexts/Contexts";
+import useAdmin from "../../Hooks/useAdmin";
 const AllMember = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
 
+    const { user } = useContext(AuthContexts)
+    const [Admin] = useAdmin(user?.email)
     const { data: myData = [], refetch } = useQuery({
         queryKey: ['Datas'],
         queryFn: async () => {
@@ -72,7 +76,7 @@ const AllMember = () => {
                                     <a href={member?.tweeter} target='__blank'><FaTwitter className='text-2xl'></FaTwitter></a>
                                     <a href={member?.linkdin} target='__blank'><FaLinkedin className='text-2xl'></FaLinkedin></a>
                                     <ReactWhatsapp number={`+88${member?.whatsApp}`} message={`Hi ${member?.name}. `} className="tooltip  tooltip-secondary" data-tip={`Contact with ${member?.name}`}><BsWhatsapp className=' mx-auto text-2xl text-green-700' ></BsWhatsapp> </ReactWhatsapp>
-                                    <button className="tooltip  tooltip-secondary" data-tip={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>
+                                    {Admin && <button className="tooltip  tooltip-secondary" data-tip={`Delete ${member?.name}`} onClick={() => handleDelete(member?._id)}><MdDeleteOutline className="text-2xl text-error"></MdDeleteOutline></button>}
 
                                 </div>
                             </div>
