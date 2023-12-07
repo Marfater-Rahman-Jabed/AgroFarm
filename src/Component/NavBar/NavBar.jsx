@@ -7,11 +7,13 @@ import { useContext, useState } from 'react';
 import { AuthContexts } from '../../Contexts/Contexts';
 import { toast } from 'react-toastify';
 import useAdmin from '../../Hooks/useAdmin';
+import useCheck from '../../Hooks/useCheck';
 
 const NavBar = () => {
     const [open, setOpen] = useState(true)
     const { user, LogOut } = useContext(AuthContexts)
     const [Admin] = useAdmin(user?.email)
+    const [check] = useCheck(user?.email)
 
     const handleLogOut = () => {
         LogOut()
@@ -50,7 +52,15 @@ const NavBar = () => {
                                     <div className='px-3 rounded-0 mt-2'><NavLink to='/contact' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold' onClick={() => setOpen(prev => !prev)}>CONTACT</NavLink></div>
                                     <div className='px-3 rounded-0 mt-2'><NavLink to='/about' className='border-separate   hover:border-b-2 hover:border-orange-500  font-semibold' onClick={() => setOpen(prev => !prev)}>ABOUT</NavLink></div>
 
-                                    <div className='px-3 rounded-0 mt-2'><NavLink to='/login' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' onClick={() => setOpen(prev => !prev)}>LOGIN</NavLink></div>
+                                    {user ? <>
+                                        {Admin && <div className='px-3 rounded-0 mt-2'><NavLink className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' to='/dashboard'>DASHBOARD</NavLink></div>}
+                                        <li className=' px-3 text-2xl lg:visible invisible lg:h-1 h-0'> | </li>
+                                        {check && <div className='px-3 rounded-0 mt-2'><Link className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' onClick={handleLogOut}>LOGOUT</Link></div>}
+                                    </> : <>
+                                        <li className=' px-3 text-2xl lg:visible invisible lg:h-[1px] h-0'> | </li>
+                                        <div className='px-3 rounded-0 mt-2'><NavLink to='/login' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>LOGIN</NavLink></div>
+                                        <div className='px-3 rounded-0 mt-2'><NavLink to='/register' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>REGISTER</NavLink></div>
+                                    </>}
                                 </ul>
                             </ul>
                         }
@@ -85,7 +95,7 @@ const NavBar = () => {
                         {user ? <>
                             {Admin && <div className='px-3 rounded-0 mt-2'><NavLink className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' to='/dashboard'>DASHBOARD</NavLink></div>}
                             <li className=' px-3 text-2xl'> | </li>
-                            <div className='px-3 rounded-0 mt-2'><Link className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' onClick={handleLogOut}>LOGOUT</Link></div>
+                            {check && <div className='px-3 rounded-0 mt-2'><Link className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold ' onClick={handleLogOut}>LOGOUT</Link></div>}
                         </> : <>
                             <li className=' px-3 text-2xl'> | </li>
                             <div className='px-3 rounded-0 mt-2'><NavLink to='/login' className='border-separate  hover:border-b-2 hover:border-orange-500 font-semibold '>LOGIN</NavLink></div>

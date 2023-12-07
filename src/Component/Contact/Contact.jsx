@@ -2,6 +2,7 @@ import emailjs from '@emailjs/browser';
 import { useRef } from 'react';
 import bgAbout from '../../assets/lastAbout.png'
 import GoogleMapComponent from '../GoogleMapComponent/GoogleMapComponent';
+import { toast } from 'react-toastify';
 const Contact = () => {
     const form = useRef();
     const handleEmail = (e) => {
@@ -10,10 +11,29 @@ const Contact = () => {
         emailjs.sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, form.current, import.meta.env.VITE_PUBLIC_KEY)
             .then((result) => {
                 console.log(result.text);
-
+                toast.success(` Your Email Received Successfully`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
                 e.target.reset()
             }, (error) => {
                 console.log(error.text);
+                toast.error(`Something went wrong. Please try again later`, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
             });
     }
     return (

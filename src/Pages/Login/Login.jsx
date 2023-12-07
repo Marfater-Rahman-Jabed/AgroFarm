@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 // import Spinner from '../../Component/Spinner/Spinner';
 import LogRegSpinner from '../../Component/LogRegSpinner/LogRegSpinner';
+import useCheck from '../../Hooks/useCheck';
 
 const Login = () => {
     useEffect(() => {
@@ -19,17 +20,20 @@ const Login = () => {
     const [userEmail, setUserEmail] = useState(null)
     const [verify, setverify] = useState('')
     const [error, setError] = useState('')
-    // console.log(userEmail)
+
+    const [check] = useCheck(userEmail);
+    console.log(check)
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate()
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
     const onsubmit = data => {
         console.log(data.email)
+
         LogIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                if (user?.emailVerified) {
+                if (check && user?.emailVerified) {
                     console.log(user)
                     toast.success(`Hi,${user?.displayName.toUpperCase()} Your Login Successfull`, {
                         position: "top-center",
@@ -47,16 +51,31 @@ const Login = () => {
                 else {
                     console.log(user)
                     setverify('verify')
-                    toast.error('Please Verfiy your Email!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                    });
+                    if (check) {
+                        toast.error('Your Email doesnt match varified', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
+                    else {
+                        toast.error('Your Email does not match', {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "colored",
+                        });
+                    }
+
                     setLoading(false)
                 }
 
@@ -136,8 +155,8 @@ const Login = () => {
         <div>
             <div className="hero min-h-screen  bg-gradient-to-r from-sky-300 via-slate-200 to-sky-300 lg:py-4">
 
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-slate-300">
-                    <img src={Logo} alt="" className="rounded-full h-32 w-32 mx-auto mt-2" />
+                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-white">
+                    <img src={Logo} alt="" className="rounded-full h-32 w-32 mx-auto mt-5" />
                     <h1 className="text-center text-xl font-serif font-bold"> <span className='text-fuchsia-700'>Login</span> <span className='text-pink-700'>Here</span></h1>
                     <div className="card-body pt-0">
                         <form onSubmit={handleSubmit(onsubmit)}>

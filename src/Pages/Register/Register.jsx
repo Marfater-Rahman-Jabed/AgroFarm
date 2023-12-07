@@ -80,7 +80,8 @@ const Register = () => {
             userName: data.name,
             email: data.email,
             phone: data.Phone,
-            address: data.Address
+            address: data.Address,
+            stay: 'yes'
 
         }
 
@@ -116,8 +117,8 @@ const Register = () => {
         <div>
             <div className="hero min-h-screen  bg-gradient-to-r from-sky-300 via-slate-200 to-sky-300 lg:py-4">
 
-                <div className="card flex-shrink-0 lg:w-[40vw] md:w-[70vw]  w-[95vw] shadow-2xl bg-slate-300">
-                    <img src={Logo} alt="" className="rounded-full h-32 w-32 mx-auto mt-2" />
+                <div className="card flex-shrink-0 lg:w-[40vw] md:w-[70vw]  w-[95vw] shadow-2xl bg-white">
+                    <img src={Logo} alt="" className="rounded-full h-32 w-32 mx-auto mt-5" />
                     <h1 className="text-center text-xl font-serif font-bold"> <span className='text-fuchsia-700'>Register</span> <span className='text-pink-700'>Here</span></h1>
                     <div className="card-body pt-0">
                         <form onSubmit={handleSubmit(onsubmit)}>

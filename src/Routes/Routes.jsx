@@ -13,6 +13,9 @@ import BlogDetails from "../Pages/Blogs/BlogDetails";
 import AllMember from "../Pages/AllMember/AllMember";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import AdminRoutes from "./AdminRoutes/AdminRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -71,6 +74,16 @@ export const router = createBrowserRouter([
                 path: '/allMember',
                 element: <AllMember></AllMember>
             },
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <AdminRoutes><DashboardLayout></DashboardLayout></AdminRoutes>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <Dashboard></Dashboard>
+            }
         ]
     }
 
