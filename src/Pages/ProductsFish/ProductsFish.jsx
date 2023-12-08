@@ -15,6 +15,7 @@ import Spinner from "../../Component/Spinner/Spinner";
 import '../../Component/About/About.css'
 import { AuthContexts } from "../../Contexts/Contexts";
 import useAdmin from "../../Hooks/useAdmin";
+import { CiSearch } from "react-icons/ci";
 const ProductsFish = () => {
     const { user } = useContext(AuthContexts)
     const [Admin] = useAdmin(user?.email)
@@ -25,6 +26,8 @@ const ProductsFish = () => {
     const [photo, setPhoto] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isUploadLoading, setIsUploadLoading] = useState(false)
+    const [searchData, setSearchData] = useState('')
+    console.log(searchData)
     const { data: fishData = [], refetch } = useQuery({
         queryKey: ['fishDatas'],
         queryFn: async () => {
@@ -124,6 +127,11 @@ const ProductsFish = () => {
                     <div className='py-24' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                         <h3 className='text-7xl text-center text-white font-bold'>Our Fish  Items</h3>
                     </div>
+                    <div className="py-3 flex justify-center bg-slate-300">
+
+                        <input type="text" placeholder="Search " className="input input-bordered input-secondary rounded-3xl w-96  " onChange={(e) => setSearchData(e.target.value)} />
+                        <CiSearch className="text-5xl -ps-4 text-secondary"></CiSearch>
+                    </div>
                     {Admin && <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
                         <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_Fish').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD ITEMS'}</button>
 
@@ -131,7 +139,7 @@ const ProductsFish = () => {
                     {isLoading ? <Loading></Loading> :
                         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 lg:px-20 px-6 py-10">
                             {
-                                fishData?.map((product, i) => <Fade key={i} direction="left" duration={2000}>
+                                fishData?.filter(data => (data?.name?.toUpperCase().slice(0, searchData.length) === searchData.toUpperCase())).map((product, i) => <Fade key={i} direction="left" duration={2000}>
                                     <div className="card lg:w-96 bg-slate-300 shadow-xl">
                                         <figure>
                                             <PhotoProvider>

@@ -16,6 +16,8 @@ import Register from "../Pages/Register/Register";
 import DashboardLayout from "../Layout/DashboardLayout/DashboardLayout";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import AdminRoutes from "./AdminRoutes/AdminRoutes";
+import AllTeamMembers from "../Pages/Dashboard/AllTeamMembers/AllTeamMembers";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 
 export const router = createBrowserRouter([
     {
@@ -83,6 +85,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <Dashboard></Dashboard>
+            },
+            {
+                path: '/dashboard/allteammember',
+                element: <AllTeamMembers></AllTeamMembers>
+            },
+            {
+                path: '/dashboard/allregisteruser',
+                element: <AllUsers></AllUsers>
             }
         ]
     }

@@ -17,10 +17,12 @@ import { Link } from 'react-router-dom';
 import '../../Component/About/About.css'
 import useAdmin from '../../Hooks/useAdmin';
 import { AuthContexts } from '../../Contexts/Contexts';
+import Spinner from '../Spinner/Spinner';
 const OurTeam = () => {
 
     const { user } = useContext(AuthContexts)
     const [Admin] = useAdmin(user?.email)
+    const [isUploadLoading, setIsUploadLoading] = useState(false)
     const imageKey = import.meta.env.VITE_imagekey;
     const [itemName, setItemName] = useState('')
     const [itemDes, setItemDes] = useState('')
@@ -68,6 +70,7 @@ const OurTeam = () => {
 
 
     const handleData = () => {
+        setIsUploadLoading(true)
         console.log('submitted')
         const formData = new FormData();
         formData.append('image', photo);
@@ -110,7 +113,7 @@ const OurTeam = () => {
                                 progress: undefined,
                                 theme: "colored",
                             });
-
+                            setIsUploadLoading(false)
                             refetch()
                         })
                 }
@@ -125,7 +128,7 @@ const OurTeam = () => {
                 <p className="text-5xl font-bold mb-10">Our Team</p>
             </div>
             {Admin && <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
-                <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_member').showModal()}>ADD TEAM MEMBER</button>
+                <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_member').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD TEAM MEMBER'}</button>
 
             </div>}
             <div className="grid  lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4  lg:px-16 md:px-12 px-10">

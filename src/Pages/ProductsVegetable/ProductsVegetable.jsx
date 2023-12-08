@@ -15,6 +15,7 @@ import Spinner from "../../Component/Spinner/Spinner";
 import '../../Component/About/About.css'
 import { AuthContexts } from "../../Contexts/Contexts";
 import useAdmin from "../../Hooks/useAdmin";
+import { CiSearch } from "react-icons/ci";
 
 const Products = () => {
     // const UrlId = window.location.pathname.split('/')[2];
@@ -28,9 +29,11 @@ const Products = () => {
     const [photo, setPhoto] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [isUploadLoading, setIsUploadLoading] = useState(false)
+    const [searchData, setSearchData] = useState('')
     // const myData = useLoaderData()
+    console.log(searchData.toUpperCase())
     const { data: vegData = [], refetch } = useQuery({
-        queryKey: ['DatasVeg'],
+        queryKey: ['vegDatas'],
         queryFn: async () => {
             setIsLoading(true)
             const res = await fetch(`http://localhost:5000/products`)
@@ -129,6 +132,11 @@ const Products = () => {
                 <div className='py-24' style={{ backgroundImage: `url(${bgAbout})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
                     <h3 className='text-7xl text-center text-white font-bold'>Our Vegetable  Items</h3>
                 </div>
+                <div className="py-3 flex justify-center bg-slate-300">
+
+                    <input type="text" placeholder="Search " className="input input-bordered input-secondary rounded-3xl w-96  " onChange={(e) => setSearchData(e.target.value)} />
+                    <CiSearch className="text-5xl -ps-4 text-secondary"></CiSearch>
+                </div>
                 {Admin && <div className='flex justify-end lg:px-20 md:px-10 px-4 py-2'>
                     <button className='btns btn1 border-2 border-solid border-orange-600 px-12 font-bold hover:text-white rounded-lg' onClick={() => document.getElementById('my_modal_veg').showModal()}>{isUploadLoading ? <Spinner></Spinner> : 'ADD ITEMS'}</button>
 
@@ -136,7 +144,7 @@ const Products = () => {
                 {isLoading ? <Loading></Loading> :
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6 lg:px-20 px-6 py-10">
                         {
-                            vegData?.map((product, i) => <Fade key={i} direction="left" duration={2000}>
+                            vegData?.filter(data => (data?.name?.toUpperCase().slice(0, searchData.length) === searchData.toUpperCase())).map((product, i) => <Fade key={i} direction="left" duration={2000}>
                                 <div className="card lg:w-96 bg-slate-300 shadow-xl">
                                     <figure>
                                         <PhotoProvider>
@@ -158,6 +166,7 @@ const Products = () => {
                                 </div>
                             </Fade>)
                         }
+
                     </div>
                 }
             </div>
